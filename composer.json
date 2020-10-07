@@ -16,5 +16,13 @@
     "psr-4": {
       "DosFarma\\Exceptions\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "DosFarma\\Exceptions\\Tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.4"
   }
 }
