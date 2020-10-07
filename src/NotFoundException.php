@@ -3,66 +3,35 @@ declare(strict_types=1);
 
 namespace DosFarma\Exceptions;
 
-class NotFoundException extends \UnexpectedValueException
+class NotFoundException extends \UnexpectedValueException implements ApiException
 {
+    use ApiExceptionTrait;
+
     private const HTTP_CODE = 404;
 
-    private int $apiCode;
-
-    public function __construct(int $error, ExceptionResource $resource, ?\Throwable $throwable)
+    public function __construct(int $errorCode, ExceptionResource $resource, array $extraData, ?\Throwable $throwable)
     {
-        $apiCode = $this->code($error, $resource);
+        $apiCode = $this->buildApiCode(self::HTTP_CODE, $resource, $errorCode);
 
         parent::__construct(
-            $this->message($resource),
+            '',
             $apiCode,
             $throwable,
         );
 
+        $this->errorCode = $errorCode;
+        $this->httpCode = self::HTTP_CODE;
         $this->apiCode = $apiCode;
+        $this->extraData = $extraData;
+        $this->message = $this->buildMessage($resource);
     }
 
-    public function httpCode(): int
-    {
-        return self::HTTP_CODE;
-    }
-
-    public function apiCode(): int
-    {
-        return $this->apiCode;
-    }
-
-    private function message(ExceptionResource $resource): string
+    private function buildMessage(ExceptionResource $resource): string
     {
         return \sprintf(
             '%s %s not found.',
             $resource->resourceName(),
             $resource->resourceId(),
-        );
-    }
-
-    private function code(int $errorCode, ExceptionResource $resource): int
-    {
-        return (integer)(
-            self::HTTP_CODE
-            . $this->stringifyCode($resource->resourceCode(), 2)
-            . $this->stringifyCode($errorCode, 3)
-        );
-    }
-
-    private function stringifyCode(int $code, int $digits): string
-    {
-        if (\strlen((string)$code) > $digits) {
-            throw new \Exception(
-                \sprintf('Codes above %d digits not allowed. Given %d', $digits, $code)
-            );
-        }
-
-        return \str_pad(
-            (string)$code,
-            $digits,
-            '0',
-            STR_PAD_LEFT,
         );
     }
 }

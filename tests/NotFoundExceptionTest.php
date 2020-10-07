@@ -30,6 +30,7 @@ final class NotFoundExceptionTest extends TestCase
                     parent::__construct(
                         $errorCode,
                         $resource,
+                        [],
                         $throwable,
                     );
                 }
@@ -64,6 +65,7 @@ final class NotFoundExceptionTest extends TestCase
                     parent::__construct(
                         $errorCode,
                         $resource,
+                        [],
                         $throwable,
                     );
                 }
