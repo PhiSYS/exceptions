@@ -1,0 +1,20 @@
+{
+  "name": "dosfarma/exceptions",
+  "description": "Support for integration of domain exceptions in apis.",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Sergio Hernández Martínez",
+      "email": "sergio.hernandez@dosfarma.com"
+    }
+  ],
+  "license": "MIT",
+  "require": {
+    "php": "^7.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "DosFarma\\Exceptions\\": "src/"
+    }
+  }
+}
