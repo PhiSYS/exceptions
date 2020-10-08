@@ -9,11 +9,8 @@ class NotFoundException extends ApiException
 {
     private const HTTP_CODE = 404;
 
-    public function __construct(
-        int $errorCode,
-        ExceptionResource $resource,
-        ?\Throwable $previous = null
-    ) {
+    public function __construct(int $errorCode, ExceptionResource $resource, ?\Throwable $previous = null)
+    {
         parent::__construct(
             self::HTTP_CODE,
             $resource,

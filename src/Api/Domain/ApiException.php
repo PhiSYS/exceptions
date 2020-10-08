@@ -12,7 +12,6 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
 
     private int $httpCode;
     private ExceptionResource $resource;
-    private int $errorCode;
     private array $extraData;
     private int $apiCode;
 
@@ -32,7 +31,6 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
             $previous,
         );
 
-        $this->errorCode = $errorCode;
         $this->resource = $resource;
         $this->httpCode = $httpCode;
         $this->apiCode = $apiCode;
@@ -61,7 +59,7 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
 
     private function buildApiCode(int $httpCode, ExceptionResource $resource, int $errorCode): int
     {
-        return (integer) (
+        return (int) (
             $httpCode
             . $this->stringifyCode($resource->resourceCode(), self::PAD_LENGTH_RESOURCE_CODE)
             . $this->stringifyCode($errorCode, self::PAD_LENGTH_ERROR_CODE)
@@ -74,7 +72,7 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
             (string) $code,
             $digits,
             '0',
-            STR_PAD_LEFT,
+            \STR_PAD_LEFT,
         );
     }
 }

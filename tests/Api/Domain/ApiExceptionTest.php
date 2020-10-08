@@ -15,28 +15,27 @@ final class ApiExceptionTest extends TestCase
         $resourceCodeString = '01';
         $errorCodeString = '043';
 
-        $expectedApiCode = (integer) \sprintf('%s%s%s', $httpCodeString, $resourceCodeString, $errorCodeString);
+        $expectedApiCode = (int) \sprintf('%s%s%s', $httpCodeString, $resourceCodeString, $errorCodeString);
 
         $resource = $this->createMock(ExceptionResource::class);
         $resource
             ->method('resourceCode')
-            ->willReturn((integer) $resourceCodeString)
+            ->willReturn((int) $resourceCodeString)
         ;
 
-        $exception =
-            new class ((integer) $httpCodeString, (integer) $errorCodeString, $resource) extends ApiException
+        $exception = new class ((int) $httpCodeString, (int) $errorCodeString, $resource) extends ApiException
+        {
+            public function __construct(int $httpCode, int $errorCode, ExceptionResource $resource)
             {
-                public function __construct(int $httpCode, int $errorCode, ExceptionResource $resource)
-                {
-                    parent::__construct(
-                        $httpCode,
-                        $resource,
-                        $errorCode,
-                        [],
-                        'Exception message',
-                    );
-                }
+                parent::__construct(
+                    $httpCode,
+                    $resource,
+                    $errorCode,
+                    [],
+                    'Exception message',
+                );
             }
+        }
         ;
 
         self::assertSame($expectedApiCode, $exception->apiCode());
@@ -48,17 +47,16 @@ final class ApiExceptionTest extends TestCase
         $resourceCodeString = '01';
         $errorCodeString = '043';
 
-        $expectedApiCode = (integer) \sprintf('%s%s%s', $httpCodeString, $resourceCodeString, $errorCodeString);
-        $expectedHttpCode = (integer) $httpCodeString;
+        $expectedApiCode = (int) \sprintf('%s%s%s', $httpCodeString, $resourceCodeString, $errorCodeString);
+        $expectedHttpCode = (int) $httpCodeString;
 
         $resource = $this->createMock(ExceptionResource::class);
         $resource
             ->method('resourceCode')
-            ->willReturn((integer) $resourceCodeString)
+            ->willReturn((int) $resourceCodeString)
         ;
 
-        $exception =
-            new class ((integer) $httpCodeString, (integer) $errorCodeString, $resource) extends ApiException
+        $exception = new class ((int) $httpCodeString, (int) $errorCodeString, $resource) extends ApiException
             {
                 public function __construct(int $httpCode, int $errorCode, ExceptionResource $resource)
                 {
@@ -79,18 +77,17 @@ final class ApiExceptionTest extends TestCase
 
     public function testExtendedClassShouldHaveRightSerialization()
     {
-
         $httpCodeString = '404';
         $resourceCodeString = '01';
         $resourceId = '687bd66a-12b7-4a2b-9a77-107105bce3db';
         $errorCodeString = '043';
-        $apiCode = (integer) \sprintf('%s%s%s', $httpCodeString, $resourceCodeString, $errorCodeString);
+        $apiCode = (int) \sprintf('%s%s%s', $httpCodeString, $resourceCodeString, $errorCodeString);
         $message = 'Exception message';
 
         $resource = $this->createMock(ExceptionResource::class);
         $resource
             ->method('resourceCode')
-            ->willReturn((integer) $resourceCodeString)
+            ->willReturn((int) $resourceCodeString)
         ;
         $resource
             ->method('resourceId')
@@ -104,20 +101,19 @@ final class ApiExceptionTest extends TestCase
             'extra_data' => [],
         ]);
 
-        $exception =
-            new class ((integer) $httpCodeString, (integer) $errorCodeString, $resource, $message) extends ApiException
+        $exception = new class ((int) $httpCodeString, (int) $errorCodeString, $resource, $message) extends ApiException
+        {
+            public function __construct(int $httpCode, int $errorCode, ExceptionResource $resource, string $message)
             {
-                public function __construct(int $httpCode, int $errorCode, ExceptionResource $resource, string $message)
-                {
-                    parent::__construct(
-                        $httpCode,
-                        $resource,
-                        $errorCode,
-                        [],
-                        $message,
-                    );
-                }
+                parent::__construct(
+                    $httpCode,
+                    $resource,
+                    $errorCode,
+                    [],
+                    $message,
+                );
             }
+        }
         ;
 
         self::assertSame($expectedSerialization, \json_encode($exception));

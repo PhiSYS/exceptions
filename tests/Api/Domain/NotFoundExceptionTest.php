@@ -28,16 +28,17 @@ final class NotFoundExceptionTest extends TestCase
         ;
 
         $exception = new class ($errorCode, $resource, null) extends NotFoundException
+        {
+            public function __construct(int $errorCode, ExceptionResource $resource, ?\Throwable $previous)
             {
-                public function __construct(int $errorCode, ExceptionResource $resource, ?\Throwable $previous)
-                {
-                    parent::__construct(
-                        $errorCode,
-                        $resource,
-                        $previous,
-                    );
-                }
+                parent::__construct(
+                    $errorCode,
+                    $resource,
+                    $previous,
+                );
             }
+        }
+
         ;
 
         self::assertEquals($expectedMessage, $exception->getMessage());
