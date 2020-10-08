@@ -12,9 +12,10 @@ class NotFoundException extends \UnexpectedValueException implements ApiExceptio
     public function __construct(int $errorCode, ExceptionResource $resource, array $extraData, ?\Throwable $throwable)
     {
         $apiCode = $this->buildApiCode(self::HTTP_CODE, $resource, $errorCode);
+        $message = $this->buildMessage($resource);
 
         parent::__construct(
-            '',
+            $message,
             $apiCode,
             $throwable,
         );
@@ -23,7 +24,6 @@ class NotFoundException extends \UnexpectedValueException implements ApiExceptio
         $this->httpCode = self::HTTP_CODE;
         $this->apiCode = $apiCode;
         $this->extraData = $extraData;
-        $this->message = $this->buildMessage($resource);
     }
 
     private function buildMessage(ExceptionResource $resource): string
