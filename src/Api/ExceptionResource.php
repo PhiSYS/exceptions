@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace DosFarma\Exceptions;
+namespace DosFarma\Exceptions\Api;
 
 interface ExceptionResource
 {
