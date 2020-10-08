@@ -10,20 +10,20 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
     private const PAD_LENGTH_ERROR_CODE = 3;
     private const PAD_LENGTH_RESOURCE_CODE = 2;
 
-    private int $httpCode;
+    private int $statusCode;
     private ExceptionResource $resource;
     private array $extraData;
     private int $apiCode;
 
     public function __construct(
-        int $httpCode,
+        int $statusCode,
         ExceptionResource $resource,
         int $errorCode,
         array $extraData,
         string $message,
         ?\Throwable $previous = null
     ) {
-        $apiCode = $this->buildApiCode($httpCode, $resource, $errorCode);
+        $apiCode = $this->buildApiCode($statusCode, $resource, $errorCode);
 
         parent::__construct(
             $message,
@@ -32,14 +32,14 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
         );
 
         $this->resource = $resource;
-        $this->httpCode = $httpCode;
+        $this->statusCode = $statusCode;
         $this->apiCode = $apiCode;
         $this->extraData = $extraData;
     }
 
-    public function httpCode(): int
+    public function statusCode(): int
     {
-        return $this->httpCode;
+        return $this->statusCode;
     }
 
     public function apiCode(): int
@@ -57,10 +57,10 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
         ];
     }
 
-    private function buildApiCode(int $httpCode, ExceptionResource $resource, int $errorCode): int
+    private function buildApiCode(int $statusCode, ExceptionResource $resource, int $errorCode): int
     {
         return (int) (
-            $httpCode
+            $statusCode
             . $this->stringifyCode($resource->resourceCode(), self::PAD_LENGTH_RESOURCE_CODE)
             . $this->stringifyCode($errorCode, self::PAD_LENGTH_ERROR_CODE)
         );
@@ -68,6 +68,12 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
 
     private function stringifyCode(int $code, int $digits): string
     {
+        if (\strlen((string) $code) > $digits) {
+            throw new \InvalidArgumentException(
+                \sprintf('Codes above %d digits not allowed. Given %d', $digits, $code),
+            );
+        }
+
         return \str_pad(
             (string) $code,
             $digits,

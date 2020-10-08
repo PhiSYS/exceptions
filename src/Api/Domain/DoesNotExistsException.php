@@ -5,14 +5,14 @@ namespace DosFarma\Exceptions\Api\Domain;
 
 use DosFarma\Exceptions\Api\ExceptionResource;
 
-class NotFoundException extends ApiException
+class DoesNotExistsException extends ApiException
 {
-    private const HTTP_CODE = 404;
+    private const STATUS_CODE = 404;
 
     public function __construct(int $errorCode, ExceptionResource $resource, ?\Throwable $previous = null)
     {
         parent::__construct(
-            self::HTTP_CODE,
+            self::STATUS_CODE,
             $resource,
             $errorCode,
             [],
@@ -24,7 +24,7 @@ class NotFoundException extends ApiException
     private function buildMessage(ExceptionResource $resource): string
     {
         return \sprintf(
-            '%s %s not found',
+            '%s %s does not exists',
             $resource->resourceName(),
             $resource->resourceId(),
         );
