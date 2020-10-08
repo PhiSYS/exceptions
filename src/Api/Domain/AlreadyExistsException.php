@@ -5,11 +5,11 @@ namespace DosFarma\Exceptions\Api\Domain;
 
 use DosFarma\Exceptions\Api\ExceptionResource;
 
-class AlreadyExistsException extends ApiException
+abstract class AlreadyExistsException extends ApiException
 {
     private const STATUS_CODE = 400;
 
-    public function __construct(int $errorCode, ExceptionResource $resource, ?\Throwable $previous = null)
+    public function __construct(ExceptionResource $resource, int $errorCode, ?\Throwable $previous = null)
     {
         parent::__construct(
             self::STATUS_CODE,

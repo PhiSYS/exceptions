@@ -23,9 +23,9 @@ final class ApiExceptionTest extends TestCase
             ->willReturn((int) $resourceCodeString)
         ;
 
-        $exception = new class ((int) $statusCodeString, (int) $errorCodeString, $resource) extends ApiException
+        $exception = new class ((int) $statusCodeString, $resource, (int) $errorCodeString) extends ApiException
         {
-            public function __construct(int $statusCode, int $errorCode, ExceptionResource $resource)
+            public function __construct(int $statusCode, ExceptionResource $resource, int $errorCode)
             {
                 parent::__construct(
                     $statusCode,
@@ -55,9 +55,9 @@ final class ApiExceptionTest extends TestCase
             ->willReturn((int) $resourceCodeString)
         ;
 
-        $exception = new class ((int) $statusCodeString, (int) $errorCodeString, $resource) extends ApiException
+        $exception = new class ((int) $statusCodeString, $resource, (int) $errorCodeString) extends ApiException
         {
-            public function __construct(int $statusCode, int $errorCode, ExceptionResource $resource)
+            public function __construct(int $statusCode, ExceptionResource $resource, int $errorCode)
             {
                 parent::__construct(
                     $statusCode,
@@ -99,9 +99,9 @@ final class ApiExceptionTest extends TestCase
             'extra_data' => [],
         ]);
 
-        $exception = new class ((int) $statusCodeString, (int) $errorCodeString, $resource, $message) extends ApiException
+        $exception = new class ((int) $statusCodeString, $resource, (int) $errorCodeString, $message) extends ApiException
         {
-            public function __construct(int $statusCode, int $errorCode, ExceptionResource $resource, string $message)
+            public function __construct(int $statusCode, ExceptionResource $resource, int $errorCode, string $message)
             {
                 parent::__construct(
                     $statusCode,
@@ -125,9 +125,9 @@ final class ApiExceptionTest extends TestCase
 
         $this->expectException(\InvalidArgumentException::class);
 
-        new class ((int) $statusCode, (int) $errorCode, $resource) extends ApiException
+        new class ((int) $statusCode, $resource, (int) $errorCode) extends ApiException
         {
-            public function __construct(int $statusCode, int $errorCode, ExceptionResource $resource)
+            public function __construct(int $statusCode, ExceptionResource $resource, int $errorCode)
             {
                 parent::__construct(
                     $statusCode,
@@ -154,9 +154,9 @@ final class ApiExceptionTest extends TestCase
 
         $this->expectException(\InvalidArgumentException::class);
 
-        new class ((int) $statusCode, (int) $errorCode, $resource) extends ApiException
+        new class ((int) $statusCode, $resource, (int) $errorCode) extends ApiException
         {
-            public function __construct(int $statusCode, int $errorCode, ExceptionResource $resource)
+            public function __construct(int $statusCode, ExceptionResource $resource, int $errorCode)
             {
                 parent::__construct(
                     $statusCode,

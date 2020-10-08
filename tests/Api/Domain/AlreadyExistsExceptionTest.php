@@ -27,13 +27,13 @@ final class AlreadyExistsExceptionTest extends TestCase
             ->willReturn($resourceId)
         ;
 
-        $exception = new class ($errorCode, $resource, null) extends AlreadyExistsException
+        $exception = new class ($resource, $errorCode, null) extends AlreadyExistsException
         {
-            public function __construct(int $errorCode, ExceptionResource $resource, ?\Throwable $previous)
+            public function __construct(ExceptionResource $resource, int $errorCode, ?\Throwable $previous)
             {
                 parent::__construct(
-                    $errorCode,
                     $resource,
+                    $errorCode,
                     $previous,
                 );
             }
