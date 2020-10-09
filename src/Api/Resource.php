@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DosFarma\Exceptions\Api;
 
-interface ExceptionResource
+interface Resource
 {
     public function resourceName(): string;
 

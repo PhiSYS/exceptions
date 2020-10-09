@@ -4,14 +4,14 @@ declare(strict_types=1);
 namespace DosFarma\Exceptions\Tests\Api\Domain;
 
 use DosFarma\Exceptions\Api\Domain\BusinessLogicException;
-use DosFarma\Exceptions\Api\ExceptionResource;
+use DosFarma\Exceptions\Api\Resource;
 use PHPUnit\Framework\TestCase;
 
 final class BusinessLogicExceptionTest extends TestCase
 {
     public function testExtendedExceptionShouldBeBusinessLogicException()
     {
-        $resource = $this->createMock(ExceptionResource::class);
+        $resource = $this->createMock(Resource::class);
         $errorCode = 122;
         $extraData = [];
         $message = 'Exception message.';
@@ -19,7 +19,7 @@ final class BusinessLogicExceptionTest extends TestCase
         $exception = new class ($resource, $errorCode, $extraData, $message, null) extends BusinessLogicException
         {
             public function __construct(
-                ExceptionResource $resource,
+                Resource $resource,
                 int $errorCode,
                 array $extraData,
                 string $message,

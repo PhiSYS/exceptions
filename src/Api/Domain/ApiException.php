@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DosFarma\Exceptions\Api\Domain;
 
-use DosFarma\Exceptions\Api\ExceptionResource;
+use DosFarma\Exceptions\Api\Resource;
 
 abstract class ApiException extends \DomainException implements \JsonSerializable
 {
@@ -11,13 +11,13 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
     private const PAD_LENGTH_RESOURCE_CODE = 2;
 
     private int $statusCode;
-    private ExceptionResource $resource;
+    private Resource $resource;
     private array $extraData;
     private int $apiCode;
 
     public function __construct(
         int $statusCode,
-        ExceptionResource $resource,
+        Resource $resource,
         int $errorCode,
         array $extraData,
         string $message,
@@ -62,7 +62,7 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
         ];
     }
 
-    private function buildApiCode(int $statusCode, ExceptionResource $resource, int $errorCode): int
+    private function buildApiCode(int $statusCode, Resource $resource, int $errorCode): int
     {
         return (int) (
             $statusCode

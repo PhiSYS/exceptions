@@ -5,7 +5,7 @@ namespace DosFarma\Exceptions\Tests\Api\Domain;
 
 use DosFarma\Exceptions\Api\Domain\Reference;
 use DosFarma\Exceptions\Api\Domain\ReferenceNotYetAvailableException;
-use DosFarma\Exceptions\Api\ExceptionResource;
+use DosFarma\Exceptions\Api\Resource;
 use PHPUnit\Framework\TestCase;
 
 final class ReferenceNotYetAvailableExceptionTest extends TestCase
@@ -26,12 +26,12 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
             ->willReturn($referenceName)
         ;
 
-        $resource = $this->createMock(ExceptionResource::class);
+        $resource = $this->createMock(Resource::class);
 
         $exception = new class ($resource, $errorCode, $reference, null) extends ReferenceNotYetAvailableException
         {
             public function __construct(
-                ExceptionResource $resource,
+                Resource $resource,
                 int $errorCode,
                 Reference $reference,
                 ?\Throwable $previous
@@ -64,7 +64,7 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
             ->willReturn($referenceName)
         ;
 
-        $resource = $this->createMock(ExceptionResource::class);
+        $resource = $this->createMock(Resource::class);
 
         $expectedExtraData = [
             'reference' => [
@@ -76,7 +76,7 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
         $exception = new class ($resource, $errorCode, $reference, null) extends ReferenceNotYetAvailableException
         {
             public function __construct(
-                ExceptionResource $resource,
+                Resource $resource,
                 int $errorCode,
                 Reference $reference,
                 ?\Throwable $previous

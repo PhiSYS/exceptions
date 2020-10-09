@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace DosFarma\Exceptions\Api\Domain;
 
-use DosFarma\Exceptions\Api\ExceptionResource;
+use DosFarma\Exceptions\Api\Resource;
 
 abstract class ReferenceNotYetAvailableException extends ApiException
 {
     private const STATUS_CODE = 409;
 
     public function __construct(
-        ExceptionResource $resource,
+        Resource $resource,
         int $errorCode,
         Reference $reference,
         ?\Throwable $previous = null

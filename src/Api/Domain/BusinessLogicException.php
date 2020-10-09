@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace DosFarma\Exceptions\Api\Domain;
 
-use DosFarma\Exceptions\Api\ExceptionResource;
+use DosFarma\Exceptions\Api\Resource;
 
 abstract class BusinessLogicException extends ApiException
 {
     private const STATUS_CODE = 400;
 
     public function __construct(
-        ExceptionResource $resource,
+        Resource $resource,
         int $errorCode,
         array $extraData,
         string $message,

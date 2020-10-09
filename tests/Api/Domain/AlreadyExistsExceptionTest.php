@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DosFarma\Exceptions\Tests\Api\Domain;
 
-use DosFarma\Exceptions\Api\ExceptionResource;
+use DosFarma\Exceptions\Api\Resource;
 use DosFarma\Exceptions\Api\Domain\AlreadyExistsException;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +17,7 @@ final class AlreadyExistsExceptionTest extends TestCase
 
         $expectedMessage = \sprintf('%s %s already exists.', $resourceName, $resourceId);
 
-        $resource = $this->createMock(ExceptionResource::class);
+        $resource = $this->createMock(Resource::class);
         $resource
             ->method('resourceName')
             ->willReturn($resourceName)
@@ -29,7 +29,7 @@ final class AlreadyExistsExceptionTest extends TestCase
 
         $exception = new class ($resource, $errorCode, null) extends AlreadyExistsException
         {
-            public function __construct(ExceptionResource $resource, int $errorCode, ?\Throwable $previous)
+            public function __construct(Resource $resource, int $errorCode, ?\Throwable $previous)
             {
                 parent::__construct(
                     $resource,
