@@ -18,6 +18,7 @@ __MACOSX/
 
 # Composer
 /vendor/
+composer.lock
 
 ###> phpunit/phpunit ###
 /phpunit.xml
