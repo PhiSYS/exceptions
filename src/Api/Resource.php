@@ -8,6 +8,4 @@ interface Resource
     public function resourceName(): string;
 
     public function resourceCode(): int;
-
-    public function resourceId(): string;
 }

@@ -24,9 +24,8 @@ abstract class AlreadyExistsException extends ApiException
     private function buildMessage(Resource $resource): string
     {
         return \sprintf(
-            '%s %s already exists.',
+            '%s already exists.',
             $resource->resourceName(),
-            $resource->resourceId(),
         );
     }
 }
