@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d2c3217e4dd75f232299c2fbc19e6f61",
+    "content-hash": "eee8a6a2b2477fcd7463a1ae686d38cc",
     "packages": [],
     "packages-dev": [
         {
@@ -72,6 +72,55 @@
                 "tests"
             ],
             "time": "2020-06-25T14:57:39+00:00"
+        },
+        {
+            "name": "dg/bypass-finals",
+            "version": "v1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dg/bypass-finals.git",
+                "reference": "3fe1792071f65a8ae973833bd38f2827171de5e7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dg/bypass-finals/zipball/3fe1792071f65a8ae973833bd38f2827171de5e7",
+                "reference": "3fe1792071f65a8ae973833bd38f2827171de5e7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "nette/tester": "^2.3",
+                "phpstan/phpstan": "^0.12"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "https://davidgrudl.com"
+                }
+            ],
+            "description": "Removes final keyword from source code on-the-fly and allows mocking of final methods and classes",
+            "keywords": [
+                "finals",
+                "mocking",
+                "phpunit",
+                "testing",
+                "unit"
+            ],
+            "time": "2020-09-15T13:38:46+00:00"
         },
         {
             "name": "doctrine/instantiator",

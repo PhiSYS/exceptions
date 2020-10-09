@@ -14,7 +14,7 @@ final class BusinessLogicExceptionTest extends TestCase
         $resource = $this->createMock(ExceptionResource::class);
         $errorCode = 122;
         $extraData = [];
-        $message = 'Exception message';
+        $message = 'Exception message.';
 
         $exception = new class ($resource, $errorCode, $extraData, $message, null) extends BusinessLogicException
         {

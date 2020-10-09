@@ -15,7 +15,7 @@ final class DoesNotExistsExceptionTest extends TestCase
         $resourceId = '687bd66a-12b7-4a2b-9a77-107105bce3db';
         $errorCode = 43;
 
-        $expectedMessage = \sprintf('%s %s does not exists', $resourceName, $resourceId);
+        $expectedMessage = \sprintf('%s %s does not exists.', $resourceName, $resourceId);
 
         $resource = $this->createMock(ExceptionResource::class);
         $resource

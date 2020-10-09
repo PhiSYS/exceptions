@@ -47,6 +47,11 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
         return $this->apiCode;
     }
 
+    public function extraData(): array
+    {
+        return $this->extraData;
+    }
+
     public function jsonSerialize(): array
     {
         return [
@@ -70,7 +75,7 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
     {
         if (\strlen((string) $code) > $digits) {
             throw new \InvalidArgumentException(
-                \sprintf('Codes above %d digits not allowed. Given %d', $digits, $code),
+                \sprintf('Codes above %d digits not allowed. Given %d.', $digits, $code),
             );
         }
 

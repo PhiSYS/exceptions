@@ -24,7 +24,7 @@ abstract class DoesNotExistsException extends ApiException
     private function buildMessage(ExceptionResource $resource): string
     {
         return \sprintf(
-            '%s %s does not exists',
+            '%s %s does not exists.',
             $resource->resourceName(),
             $resource->resourceId(),
         );

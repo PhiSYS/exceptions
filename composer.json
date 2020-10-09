@@ -1,6 +1,6 @@
 {
   "name": "dosfarma/exceptions",
-  "description": "Support for integration of domain exceptions in apis.",
+  "description": "Support for api exceptions integration.",
   "type": "library",
   "authors": [
     {
@@ -15,7 +15,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^9.4",
-    "dosfarma/coding-standard": "dev-master"
+    "dosfarma/coding-standard": "dev-master",
+    "dg/bypass-finals": "^1.1"
   },
   "autoload": {
     "psr-4": {

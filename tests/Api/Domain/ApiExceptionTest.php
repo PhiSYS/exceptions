@@ -32,7 +32,7 @@ final class ApiExceptionTest extends TestCase
                     $resource,
                     $errorCode,
                     [],
-                    'Exception message',
+                    'Exception message.',
                 );
             }
         };
@@ -40,7 +40,7 @@ final class ApiExceptionTest extends TestCase
         self::assertSame($expectedApiCode, $exception->apiCode());
     }
 
-    public function testExtendedClassShouldReturnstatusCodeAndApiCode()
+    public function testExtendedClassShouldReturnStatusCodeAndApiCodeAndExtraData()
     {
         $statusCodeString = '404';
         $resourceCodeString = '01';
@@ -48,6 +48,7 @@ final class ApiExceptionTest extends TestCase
 
         $expectedApiCode = (int) \sprintf('%s%s%s', $statusCodeString, $resourceCodeString, $errorCodeString);
         $expectedStatusCode = (int) $statusCodeString;
+        $expectedExtraData = ['some_key' => 'some value'];
 
         $resource = $this->createMock(ExceptionResource::class);
         $resource
@@ -55,22 +56,27 @@ final class ApiExceptionTest extends TestCase
             ->willReturn((int) $resourceCodeString)
         ;
 
-        $exception = new class ((int) $statusCodeString, $resource, (int) $errorCodeString) extends ApiException
-        {
-            public function __construct(int $statusCode, ExceptionResource $resource, int $errorCode)
+        $exception = new class (
+            (int) $statusCodeString,
+            $resource,
+            (int) $errorCodeString,
+            $expectedExtraData
+        ) extends ApiException {
+            public function __construct(int $statusCode, ExceptionResource $resource, int $errorCode, array $extraData)
             {
                 parent::__construct(
                     $statusCode,
                     $resource,
                     $errorCode,
-                    [],
-                    'Exception message',
+                    $extraData,
+                    'Exception message.',
                 );
             }
         };
 
         self::assertSame($expectedStatusCode, $exception->statusCode());
         self::assertSame($expectedApiCode, $exception->apiCode());
+        self::assertSame($expectedExtraData, $exception->extraData());
     }
 
     public function testExtendedClassShouldHaveRightSerialization()
@@ -80,7 +86,7 @@ final class ApiExceptionTest extends TestCase
         $resourceId = '687bd66a-12b7-4a2b-9a77-107105bce3db';
         $errorCodeString = '043';
         $apiCode = (int) \sprintf('%s%s%s', $statusCodeString, $resourceCodeString, $errorCodeString);
-        $message = 'Exception message';
+        $message = 'Exception message.';
 
         $resource = $this->createMock(ExceptionResource::class);
         $resource
@@ -134,7 +140,7 @@ final class ApiExceptionTest extends TestCase
                     $resource,
                     $errorCode,
                     [],
-                    'Exception message',
+                    'Exception message.',
                 );
             }
         };
@@ -163,7 +169,7 @@ final class ApiExceptionTest extends TestCase
                     $resource,
                     $errorCode,
                     [],
-                    'Exception message',
+                    'Exception message.',
                 );
             }
         };

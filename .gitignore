@@ -22,5 +22,4 @@ __MACOSX/
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
-/tests/bootstrap.php
 ###< phpunit/phpunit ###
