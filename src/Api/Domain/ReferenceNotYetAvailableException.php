@@ -25,8 +25,8 @@ abstract class ReferenceNotYetAvailableException extends ApiException
     {
         return [
             'reference' => [
-                'id' => $reference->id(),
-                'name' => $reference->name(),
+                'id' => $reference->referenceId(),
+                'name' => $reference->referenceName(),
             ],
         ];
     }
@@ -35,7 +35,7 @@ abstract class ReferenceNotYetAvailableException extends ApiException
     {
         return \sprintf(
             'Required reference %s not yet available. May be available soon, or creation is required.',
-            $reference->name(),
+            $reference->referenceName(),
         );
     }
 }

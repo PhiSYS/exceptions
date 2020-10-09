@@ -5,7 +5,7 @@ namespace DosFarma\Exceptions\Api\Domain;
 
 interface Reference
 {
-    public function id(): string;
+    public function referenceId(): string;
 
-    public function name(): string;
+    public function referenceName(): string;
 }

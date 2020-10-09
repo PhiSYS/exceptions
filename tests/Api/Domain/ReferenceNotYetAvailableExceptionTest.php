@@ -22,7 +22,7 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
 
         $reference = $this->createMock(Reference::class);
         $reference
-            ->method('name')
+            ->method('referenceName')
             ->willReturn($referenceName)
         ;
 
@@ -56,11 +56,11 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
 
         $reference = $this->createMock(Reference::class);
         $reference
-            ->method('id')
+            ->method('referenceId')
             ->willReturn($referenceId)
         ;
         $reference
-            ->method('name')
+            ->method('referenceName')
             ->willReturn($referenceName)
         ;
 
@@ -68,8 +68,8 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
 
         $expectedExtraData = [
             'reference' => [
-                'id' => $reference->id(),
-                'name' => $reference->name(),
+                'id' => $reference->referenceId(),
+                'name' => $reference->referenceName(),
             ],
         ];
 
