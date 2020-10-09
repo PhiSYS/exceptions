@@ -9,12 +9,8 @@ abstract class ReferenceNotYetAvailableException extends ApiException
 {
     private const STATUS_CODE = 409;
 
-    public function __construct(
-        Resource $resource,
-        int $errorCode,
-        Reference $reference,
-        ?\Throwable $previous = null
-    ) {
+    public function __construct(Resource $resource, int $errorCode, Reference $reference, ?\Throwable $previous = null)
+    {
         parent::__construct(
             self::STATUS_CODE,
             $resource,

@@ -83,7 +83,6 @@ final class ApiExceptionTest extends TestCase
     {
         $statusCodeString = '404';
         $resourceCodeString = '01';
-        $resourceId = '687bd66a-12b7-4a2b-9a77-107105bce3db';
         $errorCodeString = '043';
         $apiCode = (int) \sprintf('%s%s%s', $statusCodeString, $resourceCodeString, $errorCodeString);
         $message = 'Exception message.';
@@ -93,13 +92,8 @@ final class ApiExceptionTest extends TestCase
             ->method('resourceCode')
             ->willReturn((int) $resourceCodeString)
         ;
-        $resource
-            ->method('resourceId')
-            ->willReturn($resourceId)
-        ;
 
         $expectedSerialization = \json_encode([
-            'aggregate_id' => $resourceId,
             'message' => $message,
             'error_code' => $apiCode,
             'extra_data' => [],

@@ -11,7 +11,6 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
     private const PAD_LENGTH_RESOURCE_CODE = 2;
 
     private int $statusCode;
-    private Resource $resource;
     private array $extraData;
     private int $apiCode;
 
@@ -31,7 +30,6 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
             $previous,
         );
 
-        $this->resource = $resource;
         $this->statusCode = $statusCode;
         $this->apiCode = $apiCode;
         $this->extraData = $extraData;
@@ -55,7 +53,6 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
     public function jsonSerialize(): array
     {
         return [
-            'aggregate_id' => $this->resource->resourceId(),
             'message' => $this->message,
             'error_code' => $this->apiCode,
             'extra_data' => $this->extraData,
