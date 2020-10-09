@@ -12,6 +12,7 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
 {
     public function testExtendedExceptionShouldGenerateRightMessageException()
     {
+        $referenceId = '981fc42b-148e-4b76-bfe0-c06a6d320433';
         $referenceName = 'reference_name';
         $errorCode = 345;
 
@@ -20,26 +21,22 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
             $referenceName,
         );
 
-        $reference = $this->createMock(Reference::class);
-        $reference
-            ->method('referenceName')
-            ->willReturn($referenceName)
-        ;
-
         $resource = $this->createMock(Resource::class);
 
-        $exception = new class ($resource, $errorCode, $reference, null) extends ReferenceNotYetAvailableException
+        $exception = new class ($resource, $errorCode, $referenceId, $referenceName, null) extends ReferenceNotYetAvailableException
         {
             public function __construct(
                 Resource $resource,
                 int $errorCode,
-                Reference $reference,
+                string $referenceId,
+                string $referenceName,
                 ?\Throwable $previous
             ) {
                 parent::__construct(
                     $resource,
                     $errorCode,
-                    $reference,
+                    $referenceId,
+                    $referenceName,
                     $previous,
                 );
             }
@@ -54,37 +51,29 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
         $referenceName = 'reference_name';
         $errorCode = 538;
 
-        $reference = $this->createMock(Reference::class);
-        $reference
-            ->method('referenceId')
-            ->willReturn($referenceId)
-        ;
-        $reference
-            ->method('referenceName')
-            ->willReturn($referenceName)
-        ;
-
         $resource = $this->createMock(Resource::class);
 
         $expectedExtraData = [
             'reference' => [
-                'id' => $reference->referenceId(),
-                'name' => $reference->referenceName(),
+                'id' => $referenceId,
+                'name' => $referenceName,
             ],
         ];
 
-        $exception = new class ($resource, $errorCode, $reference, null) extends ReferenceNotYetAvailableException
+        $exception = new class ($resource, $errorCode, $referenceId, $referenceName, null) extends ReferenceNotYetAvailableException
         {
             public function __construct(
                 Resource $resource,
                 int $errorCode,
-                Reference $reference,
+                string $referenceId,
+                string $referenceName,
                 ?\Throwable $previous
             ) {
                 parent::__construct(
                     $resource,
                     $errorCode,
-                    $reference,
+                    $referenceId,
+                    $referenceName,
                     $previous,
                 );
             }
