@@ -25,7 +25,7 @@ abstract class AlreadyExistsException extends ApiException
     {
         return \sprintf(
             '%s already exists.',
-            $resource->resourceName(),
+            \ucfirst($resource->resourceName()),
         );
     }
 }

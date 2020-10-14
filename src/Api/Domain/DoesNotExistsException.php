@@ -25,7 +25,7 @@ abstract class DoesNotExistsException extends ApiException
     {
         return \sprintf(
             '%s does not exists.',
-            $resource->resourceName(),
+            \ucfirst($resource->resourceName()),
         );
     }
 }

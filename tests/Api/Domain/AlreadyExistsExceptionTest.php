@@ -11,10 +11,10 @@ final class AlreadyExistsExceptionTest extends TestCase
 {
     public function testExtendedExceptionShouldGenerateRightMessageException()
     {
-        $resourceName = 'Resource Name';
+        $resourceName = 'resource name';
         $errorCode = 25;
 
-        $expectedMessage = \sprintf('%s already exists.', $resourceName);
+        $expectedMessage = \sprintf('%s already exists.', \ucfirst($resourceName));
 
         $resource = $this->createMock(Resource::class);
         $resource

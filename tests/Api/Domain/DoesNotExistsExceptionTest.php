@@ -11,10 +11,10 @@ final class DoesNotExistsExceptionTest extends TestCase
 {
     public function testExtendedExceptionShouldGenerateRightMessageException()
     {
-        $resourceName = 'Resource Name';
+        $resourceName = 'resource name';
         $errorCode = 43;
 
-        $expectedMessage = \sprintf('%s does not exists.', $resourceName);
+        $expectedMessage = \sprintf('%s does not exists.', \ucfirst($resourceName));
 
         $resource = $this->createMock(Resource::class);
         $resource
