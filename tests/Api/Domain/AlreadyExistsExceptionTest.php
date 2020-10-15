@@ -12,7 +12,6 @@ final class AlreadyExistsExceptionTest extends TestCase
     public function testExtendedExceptionShouldGenerateRightMessageException()
     {
         $resourceName = 'resource name';
-        $errorCode = 25;
 
         $expectedMessage = \sprintf('%s already exists.', \ucfirst($resourceName));
 
@@ -22,15 +21,21 @@ final class AlreadyExistsExceptionTest extends TestCase
             ->willReturn($resourceName)
         ;
 
-        $exception = new class ($resource, $errorCode, null) extends AlreadyExistsException
+        $exception = new class ($resource, null) extends AlreadyExistsException
         {
-            public function __construct(Resource $resource, int $errorCode, ?\Throwable $previous)
+            protected const ERROR_CODE = 25;
+            private Resource $resource;
+
+            public function __construct(Resource $resource, ?\Throwable $previous)
             {
-                parent::__construct(
-                    $resource,
-                    $errorCode,
-                    $previous,
-                );
+                $this->resource = $resource;
+
+                parent::__construct($previous);
+            }
+
+            protected function getResource(): Resource
+            {
+                return $this->resource;
             }
         };
 

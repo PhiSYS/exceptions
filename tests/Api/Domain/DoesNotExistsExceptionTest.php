@@ -12,7 +12,6 @@ final class DoesNotExistsExceptionTest extends TestCase
     public function testExtendedExceptionShouldGenerateRightMessageException()
     {
         $resourceName = 'resource name';
-        $errorCode = 43;
 
         $expectedMessage = \sprintf('%s does not exists.', \ucfirst($resourceName));
 
@@ -22,15 +21,21 @@ final class DoesNotExistsExceptionTest extends TestCase
             ->willReturn($resourceName)
         ;
 
-        $exception = new class ($resource, $errorCode, null) extends DoesNotExistsException
+        $exception = new class ($resource, null) extends DoesNotExistsException
         {
-            public function __construct(Resource $resource, int $errorCode, ?\Throwable $previous)
+            protected const ERROR_CODE = 43;
+            private Resource $resource;
+
+            public function __construct(Resource $resource, ?\Throwable $previous)
             {
-                parent::__construct(
-                    $resource,
-                    $errorCode,
-                    $previous,
-                );
+                $this->resource = $resource;
+
+                parent::__construct($previous);
+            }
+
+            protected function getResource(): Resource
+            {
+                return $this->resource;
             }
         };
 

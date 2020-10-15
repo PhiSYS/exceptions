@@ -12,26 +12,28 @@ final class BusinessLogicExceptionTest extends TestCase
     public function testExtendedExceptionShouldBeBusinessLogicException()
     {
         $resource = $this->createMock(Resource::class);
-        $errorCode = 122;
         $extraData = [];
         $message = 'Exception message.';
 
-        $exception = new class ($resource, $errorCode, $extraData, $message, null) extends BusinessLogicException
+        $exception = new class ($resource, $extraData, $message, null) extends BusinessLogicException
         {
+            protected const ERROR_CODE = 122;
+            private Resource $resource;
+
             public function __construct(
                 Resource $resource,
-                int $errorCode,
                 array $extraData,
                 string $message,
                 ?\Throwable $previous = null
             ) {
-              parent::__construct(
-                  $resource,
-                  $errorCode,
-                  $extraData,
-                  $message,
-                  $previous,
-              );
+                $this->resource = $resource;
+
+                parent::__construct($message, $extraData, $previous);
+            }
+
+            protected function getResource(): Resource
+            {
+                return $this->resource;
             }
         };
 

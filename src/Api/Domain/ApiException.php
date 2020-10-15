@@ -15,14 +15,13 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
     private int $apiCode;
 
     public function __construct(
-        int $statusCode,
-        Resource $resource,
-        int $errorCode,
-        array $extraData,
         string $message,
+        array $extraData = [],
         ?\Throwable $previous = null
     ) {
-        $apiCode = $this->buildApiCode($statusCode, $resource, $errorCode);
+        $resource = static::getResource();
+        $statusCode = static::STATUS_CODE;
+        $apiCode = $this->buildApiCode($statusCode, $resource, static::ERROR_CODE);
 
         parent::__construct(
             $message,

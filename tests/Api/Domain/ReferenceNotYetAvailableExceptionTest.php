@@ -14,7 +14,6 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
     {
         $referenceId = '981fc42b-148e-4b76-bfe0-c06a6d320433';
         $referenceName = 'reference_name';
-        $errorCode = 345;
 
         $expectedMessage = \sprintf(
             'Required reference %s not yet available. May be available soon, or creation is required.',
@@ -23,22 +22,29 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
 
         $resource = $this->createMock(Resource::class);
 
-        $exception = new class ($resource, $errorCode, $referenceId, $referenceName, null) extends ReferenceNotYetAvailableException
+        $exception = new class ($resource, $referenceId, $referenceName, null) extends ReferenceNotYetAvailableException
         {
+            protected const ERROR_CODE = 345;
+            private Resource $resource;
+
             public function __construct(
                 Resource $resource,
-                int $errorCode,
                 string $referenceId,
                 string $referenceName,
                 ?\Throwable $previous
             ) {
+                $this->resource = $resource;
+
                 parent::__construct(
-                    $resource,
-                    $errorCode,
                     $referenceId,
                     $referenceName,
                     $previous,
                 );
+            }
+
+            protected function getResource(): Resource
+            {
+                return $this->resource;
             }
         };
 
@@ -49,7 +55,6 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
     {
         $referenceId = 'fe28ff0a-fc8c-460f-b205-1429b6c5732c';
         $referenceName = 'reference_name';
-        $errorCode = 538;
 
         $resource = $this->createMock(Resource::class);
 
@@ -60,22 +65,29 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
             ],
         ];
 
-        $exception = new class ($resource, $errorCode, $referenceId, $referenceName, null) extends ReferenceNotYetAvailableException
+        $exception = new class ($resource, $referenceId, $referenceName, null) extends ReferenceNotYetAvailableException
         {
+            protected const ERROR_CODE = 538;
+            private Resource $resource;
+
             public function __construct(
                 Resource $resource,
-                int $errorCode,
                 string $referenceId,
                 string $referenceName,
                 ?\Throwable $previous
             ) {
+                $this->resource = $resource;
+
                 parent::__construct(
-                    $resource,
-                    $errorCode,
                     $referenceId,
                     $referenceName,
                     $previous,
                 );
+            }
+
+            protected function getResource(): Resource
+            {
+                return $this->resource;
             }
         };
 

@@ -7,21 +7,18 @@ use DosFarma\Exceptions\Api\Resource;
 
 abstract class BusinessLogicException extends ApiException
 {
-    private const STATUS_CODE = 400;
+    protected const STATUS_CODE = 400;
 
     public function __construct(
-        Resource $resource,
-        int $errorCode,
-        array $extraData,
         string $message,
+        array $extraData = [],
         ?\Throwable $previous = null
     ) {
+        $resource = static::getResource();
+
         parent::__construct(
-            self::STATUS_CODE,
-            $resource,
-            $errorCode,
-            $extraData,
             $message,
+            $extraData,
             $previous,
         );
     }

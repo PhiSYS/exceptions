@@ -7,16 +7,15 @@ use DosFarma\Exceptions\Api\Resource;
 
 abstract class AlreadyExistsException extends ApiException
 {
-    private const STATUS_CODE = 400;
+    protected const STATUS_CODE = 400;
 
-    public function __construct(Resource $resource, int $errorCode, ?\Throwable $previous = null)
+    public function __construct(?\Throwable $previous = null)
     {
+        $resource = static::getResource();
+
         parent::__construct(
-            self::STATUS_CODE,
-            $resource,
-            $errorCode,
-            [],
             $this->buildMessage($resource),
+            [],
             $previous,
         );
     }

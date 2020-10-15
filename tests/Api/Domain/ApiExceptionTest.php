@@ -11,29 +11,34 @@ final class ApiExceptionTest extends TestCase
 {
     public function testExtendedExceptionShouldGenerateRightApiCode()
     {
-        $statusCodeString = '404';
-        $resourceCodeString = '01';
-        $errorCodeString = '043';
+        $statusCode = 404;
+        $resourceCode = 1;
+        $errorCode = 43;
 
-        $expectedApiCode = (int) \sprintf('%s%s%s', $statusCodeString, $resourceCodeString, $errorCodeString);
+        $expectedApiCode = (int) \sprintf('%3d%02d%03d', $statusCode, $resourceCode, $errorCode);
 
         $resource = $this->createMock(Resource::class);
         $resource
             ->method('resourceCode')
-            ->willReturn((int) $resourceCodeString)
+            ->willReturn($resourceCode)
         ;
 
-        $exception = new class ((int) $statusCodeString, $resource, (int) $errorCodeString) extends ApiException
+        $exception = new class ($resource) extends ApiException
         {
-            public function __construct(int $statusCode, Resource $resource, int $errorCode)
+            protected const STATUS_CODE = 404;
+            protected const ERROR_CODE = 43;
+            private Resource $resource;
+
+            public function __construct(Resource $resource)
             {
-                parent::__construct(
-                    $statusCode,
-                    $resource,
-                    $errorCode,
-                    [],
-                    'Exception message.',
-                );
+                $this->resource = $resource;
+
+                parent::__construct('Exception message.');
+            }
+
+            protected function getResource(): Resource
+            {
+                return $this->resource;
             }
         };
 
@@ -42,55 +47,61 @@ final class ApiExceptionTest extends TestCase
 
     public function testExtendedClassShouldReturnStatusCodeAndApiCodeAndExtraData()
     {
-        $statusCodeString = '404';
-        $resourceCodeString = '01';
-        $errorCodeString = '043';
+        $statusCode = 404;
+        $resourceCode = 1;
+        $errorCode = 43;
 
-        $expectedApiCode = (int) \sprintf('%s%s%s', $statusCodeString, $resourceCodeString, $errorCodeString);
-        $expectedStatusCode = (int) $statusCodeString;
+        $expectedApiCode = (int) \sprintf('%3d%02d%03d', $statusCode, $resourceCode, $errorCode);
         $expectedExtraData = ['some_key' => 'some value'];
 
         $resource = $this->createMock(Resource::class);
         $resource
             ->method('resourceCode')
-            ->willReturn((int) $resourceCodeString)
+            ->willReturn((int) $resourceCode)
         ;
 
         $exception = new class (
-            (int) $statusCodeString,
             $resource,
-            (int) $errorCodeString,
             $expectedExtraData
-        ) extends ApiException {
-            public function __construct(int $statusCode, Resource $resource, int $errorCode, array $extraData)
+        ) extends ApiException
+        {
+            protected const STATUS_CODE = 404;
+            protected const ERROR_CODE = 43;
+            private Resource $resource;
+
+            public function __construct(Resource $resource, array $extraData)
             {
+                $this->resource = $resource;
+
                 parent::__construct(
-                    $statusCode,
-                    $resource,
-                    $errorCode,
-                    $extraData,
                     'Exception message.',
+                    $extraData,
                 );
+            }
+
+            protected function getResource(): Resource
+            {
+                return $this->resource;
             }
         };
 
-        self::assertSame($expectedStatusCode, $exception->statusCode());
+        self::assertSame($statusCode, $exception->statusCode());
         self::assertSame($expectedApiCode, $exception->apiCode());
         self::assertSame($expectedExtraData, $exception->extraData());
     }
 
     public function testExtendedClassShouldHaveRightSerialization()
     {
-        $statusCodeString = '404';
-        $resourceCodeString = '01';
-        $errorCodeString = '043';
-        $apiCode = (int) \sprintf('%s%s%s', $statusCodeString, $resourceCodeString, $errorCodeString);
+        $statusCode = 404;
+        $resourceCode = 1;
+        $errorCode = 43;
+        $apiCode = (int) \sprintf('%3d%02d%03d', $statusCode, $resourceCode, $errorCode);
         $message = 'Exception message.';
 
         $resource = $this->createMock(Resource::class);
         $resource
             ->method('resourceCode')
-            ->willReturn((int) $resourceCodeString)
+            ->willReturn((int) $resourceCode)
         ;
 
         $expectedSerialization = \json_encode([
@@ -99,17 +110,25 @@ final class ApiExceptionTest extends TestCase
             'extra_data' => [],
         ]);
 
-        $exception = new class ((int) $statusCodeString, $resource, (int) $errorCodeString, $message) extends ApiException
+        $exception = new class ($resource, $message) extends ApiException
         {
-            public function __construct(int $statusCode, Resource $resource, int $errorCode, string $message)
+            protected const STATUS_CODE = 404;
+            protected const ERROR_CODE = 43;
+            private Resource $resource;
+
+            public function __construct(Resource $resource, string $message)
             {
+                $this->resource = $resource;
+
                 parent::__construct(
-                    $statusCode,
-                    $resource,
-                    $errorCode,
-                    [],
                     $message,
+                    [],
                 );
+            }
+
+            protected function getResource(): Resource
+            {
+                return $this->resource;
             }
         };
 
@@ -118,33 +137,36 @@ final class ApiExceptionTest extends TestCase
 
     public function testExtendedClassShouldThrowExceptionWhenErrorCodeExceedsThreeDigits()
     {
-        $statusCode = 404;
-        $errorCode = 1043;
-
         $resource = $this->createMock(Resource::class);
 
         $this->expectException(\InvalidArgumentException::class);
 
-        new class ((int) $statusCode, $resource, (int) $errorCode) extends ApiException
+        new class ($resource) extends ApiException
         {
-            public function __construct(int $statusCode, Resource $resource, int $errorCode)
+            protected const STATUS_CODE = 404;
+            protected const ERROR_CODE = 1043;
+            private Resource $resource;
+
+            public function __construct(Resource $resource)
             {
+                $this->resource = $resource;
+
                 parent::__construct(
-                    $statusCode,
-                    $resource,
-                    $errorCode,
-                    [],
                     'Exception message.',
+                    [],
                 );
+            }
+
+            protected function getResource(): Resource
+            {
+                return $this->resource;
             }
         };
     }
 
     public function testExtendedClassShouldThrowExceptionWhenResourceCodeExceedsTwoDigits()
     {
-        $statusCode = 404;
         $resourceCode = 131;
-        $errorCode = 143;
 
         $resource = $this->createMock(Resource::class);
         $resource
@@ -154,17 +176,25 @@ final class ApiExceptionTest extends TestCase
 
         $this->expectException(\InvalidArgumentException::class);
 
-        new class ((int) $statusCode, $resource, (int) $errorCode) extends ApiException
+        new class ($resource) extends ApiException
         {
-            public function __construct(int $statusCode, Resource $resource, int $errorCode)
+            protected const STATUS_CODE = 404;
+            protected const ERROR_CODE = 143;
+            private Resource $resource;
+
+            public function __construct(Resource $resource)
             {
+                $this->resource = $resource;
+
                 parent::__construct(
-                    $statusCode,
-                    $resource,
-                    $errorCode,
-                    [],
                     'Exception message.',
+                    [],
                 );
+            }
+
+            protected function getResource(): Resource
+            {
+                return $this->resource;
             }
         };
     }
