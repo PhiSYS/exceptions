@@ -25,7 +25,7 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
         $exception = new class ($resource, $referenceId, $referenceName, null) extends ReferenceNotYetAvailableException
         {
             protected const ERROR_CODE = 345;
-            private Resource $resource;
+            private static Resource $resource;
 
             public function __construct(
                 Resource $resource,
@@ -33,7 +33,7 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
                 string $referenceName,
                 ?\Throwable $previous
             ) {
-                $this->resource = $resource;
+                self::$resource = $resource;
 
                 parent::__construct(
                     $referenceId,
@@ -42,9 +42,9 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
                 );
             }
 
-            protected function getResource(): Resource
+            protected static function getResource(): Resource
             {
-                return $this->resource;
+                return self::$resource;
             }
         };
 
@@ -68,7 +68,7 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
         $exception = new class ($resource, $referenceId, $referenceName, null) extends ReferenceNotYetAvailableException
         {
             protected const ERROR_CODE = 538;
-            private Resource $resource;
+            private static Resource $resource;
 
             public function __construct(
                 Resource $resource,
@@ -76,7 +76,7 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
                 string $referenceName,
                 ?\Throwable $previous
             ) {
-                $this->resource = $resource;
+                self::$resource = $resource;
 
                 parent::__construct(
                     $referenceId,
@@ -85,9 +85,9 @@ final class ReferenceNotYetAvailableExceptionTest extends TestCase
                 );
             }
 
-            protected function getResource(): Resource
+            protected static function getResource(): Resource
             {
-                return $this->resource;
+                return self::$resource;
             }
         };
 

@@ -58,6 +58,8 @@ abstract class ApiException extends \DomainException implements \JsonSerializabl
         ];
     }
 
+    abstract protected static function getResource(): Resource;
+
     private function buildApiCode(int $statusCode, Resource $resource, int $errorCode): int
     {
         return (int) (

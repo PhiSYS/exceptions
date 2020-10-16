@@ -27,18 +27,18 @@ final class ApiExceptionTest extends TestCase
         {
             protected const STATUS_CODE = 404;
             protected const ERROR_CODE = 43;
-            private Resource $resource;
+            private static Resource $resource;
 
             public function __construct(Resource $resource)
             {
-                $this->resource = $resource;
+                self::$resource = $resource;
 
                 parent::__construct('Exception message.');
             }
 
-            protected function getResource(): Resource
+            protected static function getResource(): Resource
             {
-                return $this->resource;
+                return self::$resource;
             }
         };
 
@@ -67,11 +67,11 @@ final class ApiExceptionTest extends TestCase
         {
             protected const STATUS_CODE = 404;
             protected const ERROR_CODE = 43;
-            private Resource $resource;
+            private static Resource $resource;
 
             public function __construct(Resource $resource, array $extraData)
             {
-                $this->resource = $resource;
+                self::$resource = $resource;
 
                 parent::__construct(
                     'Exception message.',
@@ -79,9 +79,9 @@ final class ApiExceptionTest extends TestCase
                 );
             }
 
-            protected function getResource(): Resource
+            protected static function getResource(): Resource
             {
-                return $this->resource;
+                return self::$resource;
             }
         };
 
@@ -114,11 +114,11 @@ final class ApiExceptionTest extends TestCase
         {
             protected const STATUS_CODE = 404;
             protected const ERROR_CODE = 43;
-            private Resource $resource;
+            private static Resource $resource;
 
             public function __construct(Resource $resource, string $message)
             {
-                $this->resource = $resource;
+                self::$resource = $resource;
 
                 parent::__construct(
                     $message,
@@ -126,9 +126,9 @@ final class ApiExceptionTest extends TestCase
                 );
             }
 
-            protected function getResource(): Resource
+            protected static function getResource(): Resource
             {
-                return $this->resource;
+                return self::$resource;
             }
         };
 
@@ -145,11 +145,11 @@ final class ApiExceptionTest extends TestCase
         {
             protected const STATUS_CODE = 404;
             protected const ERROR_CODE = 1043;
-            private Resource $resource;
+            private static Resource $resource;
 
             public function __construct(Resource $resource)
             {
-                $this->resource = $resource;
+                self::$resource = $resource;
 
                 parent::__construct(
                     'Exception message.',
@@ -157,9 +157,9 @@ final class ApiExceptionTest extends TestCase
                 );
             }
 
-            protected function getResource(): Resource
+            protected static function getResource(): Resource
             {
-                return $this->resource;
+                return self::$resource;
             }
         };
     }
@@ -180,11 +180,11 @@ final class ApiExceptionTest extends TestCase
         {
             protected const STATUS_CODE = 404;
             protected const ERROR_CODE = 143;
-            private Resource $resource;
+            private static Resource $resource;
 
             public function __construct(Resource $resource)
             {
-                $this->resource = $resource;
+                self::$resource = $resource;
 
                 parent::__construct(
                     'Exception message.',
@@ -192,9 +192,9 @@ final class ApiExceptionTest extends TestCase
                 );
             }
 
-            protected function getResource(): Resource
+            protected static function getResource(): Resource
             {
-                return $this->resource;
+                return self::$resource;
             }
         };
     }

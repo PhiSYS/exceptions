@@ -18,7 +18,7 @@ final class BusinessLogicExceptionTest extends TestCase
         $exception = new class ($resource, $extraData, $message, null) extends BusinessLogicException
         {
             protected const ERROR_CODE = 122;
-            private Resource $resource;
+            private static Resource $resource;
 
             public function __construct(
                 Resource $resource,
@@ -26,14 +26,14 @@ final class BusinessLogicExceptionTest extends TestCase
                 string $message,
                 ?\Throwable $previous = null
             ) {
-                $this->resource = $resource;
+                self::$resource = $resource;
 
                 parent::__construct($message, $extraData, $previous);
             }
 
-            protected function getResource(): Resource
+            protected static function getResource(): Resource
             {
-                return $this->resource;
+                return self::$resource;
             }
         };
 

@@ -24,18 +24,18 @@ final class AlreadyExistsExceptionTest extends TestCase
         $exception = new class ($resource, null) extends AlreadyExistsException
         {
             protected const ERROR_CODE = 25;
-            private Resource $resource;
+            private static Resource $resource;
 
             public function __construct(Resource $resource, ?\Throwable $previous)
             {
-                $this->resource = $resource;
+                self::$resource = $resource;
 
                 parent::__construct($previous);
             }
 
-            protected function getResource(): Resource
+            protected static function getResource(): Resource
             {
-                return $this->resource;
+                return self::$resource;
             }
         };
 
