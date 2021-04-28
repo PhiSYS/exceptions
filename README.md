@@ -1,4 +1,4 @@
-# DosFarma Exceptions
+# PhiSYS Exceptions
 This library provides base exceptions for using in php projects like apis.
 
 ## Api Domain

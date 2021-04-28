@@ -2,5 +2,5 @@
 <ruleset name="Project rules">
     <file>src</file>
     <exclude-pattern>src/Kernel.php</exclude-pattern>
-    <rule ref="vendor/dosfarma/coding-standard/src/ruleset.xml" />
+    <rule ref="vendor/phisys/coding-standard/src/ruleset.xml" />
 </ruleset>

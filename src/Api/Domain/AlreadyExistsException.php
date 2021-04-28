@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace DosFarma\Exceptions\Api\Domain;
+namespace PhiSYS\Exceptions\Api\Domain;
 
-use DosFarma\Exceptions\Api\Resource;
+use PhiSYS\Exceptions\Api\Resource;
 
 abstract class AlreadyExistsException extends ApiException
 {
