@@ -1,11 +1,16 @@
 {
-  "name": "dosfarma/exceptions",
+  "name": "phisys/exceptions",
   "description": "Support for api exceptions integration.",
   "type": "library",
   "authors": [
     {
-      "name": "Sergio Hernández Martínez",
-      "email": "sergio.hernandez@dosfarma.com"
+      "name": "Sergio Hernández Martínez"
+    },
+    {
+      "name": "José Ramón Flores Munuera"
+    },
+    {
+      "name": "David Strencsev Gómez"
     }
   ],
   "license": "MIT",
@@ -15,17 +20,17 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^9.4",
-    "dosfarma/coding-standard": "dev-master",
+    "phisys/coding-standard": "dev-master",
     "dg/bypass-finals": "^1.2"
   },
   "autoload": {
     "psr-4": {
-      "DosFarma\\Exceptions\\": "src/"
+      "PhiSYS\\Exceptions\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "DosFarma\\Exceptions\\Tests\\": "tests/"
+      "PhiSYS\\Exceptions\\Tests\\": "tests/"
     }
   }
 }

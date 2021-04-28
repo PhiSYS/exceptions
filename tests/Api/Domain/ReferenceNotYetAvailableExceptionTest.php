@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace DosFarma\Exceptions\Tests\Api\Domain;
+namespace PhiSYS\Exceptions\Tests\Api\Domain;
 
-use DosFarma\Exceptions\Api\Domain\Reference;
-use DosFarma\Exceptions\Api\Domain\ReferenceNotYetAvailableException;
-use DosFarma\Exceptions\Api\Resource;
+use PhiSYS\Exceptions\Api\Domain\Reference;
+use PhiSYS\Exceptions\Api\Domain\ReferenceNotYetAvailableException;
+use PhiSYS\Exceptions\Api\Resource;
 use PHPUnit\Framework\TestCase;
 
 final class ReferenceNotYetAvailableExceptionTest extends TestCase

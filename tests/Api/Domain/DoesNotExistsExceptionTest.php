@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace DosFarma\Exceptions\Tests\Api\Domain;
+namespace PhiSYS\Exceptions\Tests\Api\Domain;
 
-use DosFarma\Exceptions\Api\Resource;
-use DosFarma\Exceptions\Api\Domain\DoesNotExistsException;
+use PhiSYS\Exceptions\Api\Resource;
+use PhiSYS\Exceptions\Api\Domain\DoesNotExistsException;
 use PHPUnit\Framework\TestCase;
 
 final class DoesNotExistsExceptionTest extends TestCase
